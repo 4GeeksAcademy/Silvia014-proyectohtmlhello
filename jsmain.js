@@ -77,7 +77,8 @@
     document.getElementById('lightbox').classList.remove('active');
   });
 
-  //Carrusel for estilos-grid 
+  
+// Carrusel para estilos-grid
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.getElementById('estilos-track');
   const prevBtn = document.getElementById('estilos-prev');
@@ -88,15 +89,39 @@ document.addEventListener('DOMContentLoaded', () => {
     return card ? card.offsetWidth + 20 : 300;
   }
 
-  prevBtn.addEventListener('click', () => {
-    track.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+  nextBtn.addEventListener('click', () => {
+    // Si está al final, volver al principio
+    if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 5) {
+      track.scrollTo({
+        left: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      track.scrollBy({
+        left: scrollAmount(),
+        behavior: 'smooth'
+      });
+    }
   });
 
-  nextBtn.addEventListener('click', () => {
-    track.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+  prevBtn.addEventListener('click', () => {
+    // Si está al principio, ir al final
+    if (track.scrollLeft <= 5) {
+      track.scrollTo({
+        left: track.scrollWidth,
+        behavior: 'smooth'
+      });
+    } else {
+      track.scrollBy({
+        left: -scrollAmount(),
+        behavior: 'smooth'
+      });
+    }
   });
-  //Carrusel for galeria-grid
-  document.addEventListener('DOMContentLoaded', () => {
+});
+
+ // Carrusel para galeria-grid
+document.addEventListener('DOMContentLoaded', () => {
   const track = document.getElementById('galeria-track');
   const prevBtn = document.getElementById('galeria-prev');
   const nextBtn = document.getElementById('galeria-next');
@@ -106,12 +131,37 @@ document.addEventListener('DOMContentLoaded', () => {
     return item ? item.offsetWidth + 14 : 250;
   }
 
-  prevBtn.addEventListener('click', () => {
-    track.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+  nextBtn.addEventListener('click', () => {
+    const paso = scrollAmount();
+
+    // Si ya está al final, volver al principio
+    if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 5) {
+      track.scrollTo({
+        left: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      track.scrollBy({
+        left: paso,
+        behavior: 'smooth'
+      });
+    }
   });
 
-  nextBtn.addEventListener('click', () => {
-    track.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+  prevBtn.addEventListener('click', () => {
+    const paso = scrollAmount();
+
+    // Si está al principio, ir al final
+    if (track.scrollLeft <= 5) {
+      track.scrollTo({
+        left: track.scrollWidth,
+        behavior: 'smooth'
+      });
+    } else {
+      track.scrollBy({
+        left: -paso,
+        behavior: 'smooth'
+      });
+    }
   });
-});
 });
